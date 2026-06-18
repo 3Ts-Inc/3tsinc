@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-cream: #F5F3ED;
+  --color-charcoal: #1E2520;
+  --color-gold: #A9835A;
+  
+  --font-sans: var(--font-outfit), Arial, Helvetica, sans-serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
+}
+
+:root {
+  --background: #F5F3ED;
+  --foreground: #1E2520;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+@supports not (overflow: clip) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-gold);
+  color: #fff;
+}
