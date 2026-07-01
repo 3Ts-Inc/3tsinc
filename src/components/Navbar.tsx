@@ -68,6 +68,19 @@ export default function Navbar({ transparentOnTop = false }: { transparentOnTop?
     return () => window.removeEventListener("scroll", updateScrolled);
   }, [transparentOnTop]);
 
+  useEffect(() => {
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (!event.persisted) return;
+
+      setIsOpen(false);
+      document.body.style.removeProperty("overflow-y");
+      document.documentElement.style.removeProperty("overflow-y");
+    };
+
+    window.addEventListener("pageshow", handlePageShow);
+    return () => window.removeEventListener("pageshow", handlePageShow);
+  }, []);
+
   // Prevent vertical page scrolling when the mobile menu is open.
   useEffect(() => {
     if (isOpen) {
