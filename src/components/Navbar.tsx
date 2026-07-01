@@ -187,7 +187,7 @@ export default function Navbar({ transparentOnTop = false }: { transparentOnTop?
               />
               <path
                 d="M4 12H20"
-                className="origin-center transition-all duration-300 [transition-timing-function:cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45 group-aria-expanded:opacity-0"
+                className="origin-center transition-all duration-300 [transition-timing-function:cubic-bezier(.5,.85,.25,1.8)] group-aria-expanded:rotate-45"
               />
               <path
                 d="M4 12H20"
