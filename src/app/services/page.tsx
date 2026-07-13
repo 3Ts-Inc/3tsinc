@@ -2,39 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { getThreeTsContent } from "@/lib/siteContent";
 
-const services = [
-  {
-    title: "Coaching",
-    description:
-      "We come together in partnership to help you navigate challenge, change or opportunity. Using thought-provoking, self-analytic and creative processes, we build on strengths, identify blind spots, and help the best version of you show up when it matters.",
-    cta: "Fulfill your potential",
-    link: "/testimonials",
-  },
-  {
-    title: "Facilitation, Teambuilding & Training",
-    description:
-      "I support diverse teams to come together to address their needs: fostering inclusion, surfacing entrenched structures and thinking, and using tailored stakeholder engagement to help teams identify drivers and solutions they can sustain.",
-    cta: "Make a better team",
-    link: "/testimonials",
-  },
-  {
-    title: "Program Design",
-    description:
-      "Design and deliver catalytic programming using locally-led, adaptive, human-centered approaches, drawing on inclusive engagement to define challenges and solutions in the narrative of those living them.",
-    cta: "Build a better world",
-    link: "/testimonials",
-  },
-  {
-    title: "OD & Change Management",
-    description:
-      "I support organizations, teams, and the people in them to strengthen leadership and management practices, team dynamics, and processes so change moves from intention to practical, implementable solutions.",
-    cta: "Build a stronger org",
-    link: "/testimonials",
-  },
-];
+export default async function ServicesPage() {
+  const { services } = await getThreeTsContent();
 
-export default function ServicesPage() {
   return (
     <main className="flex min-h-screen flex-col bg-cream text-charcoal">
       <Navbar />
@@ -57,11 +29,12 @@ export default function ServicesPage() {
 
           <div className="relative min-h-[340px] overflow-hidden border border-charcoal/10 bg-[#151a16] shadow-[0_28px_90px_-70px_rgba(30,37,32,0.7)] md:min-h-[480px]">
             <Image
-              src="/shareef-presenting.webp"
-              alt="Shareef Khatib presenting to a room"
+              src={services.image.src}
+              alt={services.image.alt}
               fill
               priority
-              className="object-cover object-center"
+              className="object-cover"
+              style={{ objectPosition: services.image.position }}
               sizes="(min-width: 1024px) 46vw, 100vw"
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(21,26,22,0.02),rgba(21,26,22,0.34))]" />
@@ -71,10 +44,12 @@ export default function ServicesPage() {
 
       <section className="w-full px-6 pb-28 pt-8 md:px-16 lg:px-24">
         <div className="mx-auto grid max-w-7xl gap-4 lg:grid-cols-2">
-          {services.map((service, index) => (
+          {services.items.map((service, index) => (
             <article
               key={service.title}
-              className="group border border-charcoal/10 bg-[#fcfbf9] p-6 transition-colors hover:border-gold/45 hover:bg-white md:p-8"
+              className={`group border border-charcoal/10 bg-[#fcfbf9] p-6 transition-colors hover:border-gold/45 hover:bg-white md:p-8 ${
+                index === 2 ? "lg:col-span-2" : ""
+              }`}
             >
               <div className="flex items-start justify-between gap-6">
                 <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
@@ -85,9 +60,18 @@ export default function ServicesPage() {
               <h2 className="mt-8 max-w-[14ch] font-serif text-3xl leading-tight text-charcoal md:text-4xl">
                 {service.title}
               </h2>
-              <p className="mt-6 text-base leading-relaxed text-charcoal/68 md:text-lg">
-                {service.description}
-              </p>
+              {service.subtitle && (
+                <p className="mt-4 max-w-3xl font-serif text-xl italic leading-relaxed text-charcoal/76 md:text-2xl">
+                  {service.subtitle}
+                </p>
+              )}
+              <div className={`mt-6 text-base leading-relaxed text-charcoal/68 md:text-lg ${index === 2 ? "space-y-6 lg:columns-2 lg:gap-12" : ""}`}>
+                {service.description.map((paragraph) => (
+                  <p key={paragraph} className="mb-6 last:mb-0 break-inside-avoid">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
               <Link href={service.link} className="mt-8 inline-flex flex-col">
                 <span className="pb-2 text-sm font-semibold uppercase tracking-[0.15em] text-gold">
                   {service.cta} <span className="inline-block transition-all group-hover:ml-2">&rarr;</span>

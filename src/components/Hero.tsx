@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import type { ThreeTsContent } from "@/lib/siteContent";
 
 function HeroVisual() {
   return (
@@ -21,7 +22,7 @@ function HeroVisual() {
   );
 }
 
-export default function Hero() {
+export default function Hero({ content }: { content: ThreeTsContent["home"] }) {
   return (
     <section className="relative flex min-h-screen w-full flex-col justify-between overflow-hidden bg-charcoal">
       <div className="absolute inset-0">
@@ -42,11 +43,11 @@ export default function Hero() {
           </div>
 
           <h1 className="mb-8 max-w-[21rem] font-serif text-4xl leading-[1.08] text-white sm:max-w-2xl sm:text-5xl md:text-6xl lg:text-7xl">
-            Thoroughly. Thought. Through.
+            {content.tagline}
           </h1>
 
           <p className="mb-10 max-w-[21rem] text-lg leading-relaxed text-white/82 sm:max-w-lg md:mb-12 md:text-xl">
-            A better world starts with intention and is built through better decisions, made by the right people, with honest information, in rooms designed for clarity rather than comfort.
+            {content.introduction}
           </p>
 
           <div className="flex flex-wrap items-center gap-4">
@@ -79,7 +80,7 @@ export default function Hero() {
             3<span className="ml-0.5 text-3xl sm:text-4xl">T</span><span className="ml-0.5 text-2xl sm:text-3xl">s</span>
           </div>
           <p className="min-w-0 text-sm font-medium leading-relaxed text-cream/65 sm:text-base md:max-w-5xl md:text-lg">
-            Coaching; Facilitation, Teambuilding &amp; Training; OD &amp; Change Management; Program Design &mdash; grounded in neuroscience, governance, and 20 years of global leadership experience.
+            {content.serviceSummary}
           </p>
         </div>
       </motion.div>

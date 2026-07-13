@@ -7,18 +7,19 @@ import SelectedEngagements from "@/components/SelectedEngagements";
 import AboutUs from "@/components/AboutUs";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
+import type { ThreeTsContent } from "@/lib/siteContent";
 
-export default function HomePage() {
+export default function HomePage({ content }: { content: ThreeTsContent }) {
   return (
     <main className="flex min-h-screen flex-col bg-cream text-charcoal">
       <Navbar transparentOnTop />
-      <Hero />
+      <Hero content={content.home} />
       <WhoWeWorkWith />
-      <WhatWeDo />
+      <WhatWeDo services={content.home.services} />
       <WhyAndImpact />
-      <SelectedEngagements />
+      <SelectedEngagements cases={content.home.engagements} />
       <AboutUs />
-      <Testimonials />
+      <Testimonials backgroundImage={content.home.testimonialImage} />
       <Footer />
     </main>
   );

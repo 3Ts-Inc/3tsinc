@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import type { SiteImage } from "@/lib/siteContent";
 
 const testimonials = [
   {
@@ -25,16 +26,17 @@ const testimonials = [
   },
 ];
 
-export default function Testimonials() {
+export default function Testimonials({ backgroundImage }: { backgroundImage: SiteImage }) {
   return (
     <section className="relative w-full flex flex-col justify-between">
       {/* Background Image */}
       <div className="absolute inset-0 z-0 bg-[#111]">
         <Image
-          src="/vaseANDfooter.png"
-          alt="Decorative vase"
+          src={backgroundImage.src}
+          alt={backgroundImage.alt}
           fill
-          className="object-cover opacity-40 mix-blend-luminosity"
+          className="object-cover opacity-45 mix-blend-luminosity"
+          style={{ objectPosition: backgroundImage.position }}
         />
         {/* Gradient overlay to ensure text readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#151a16] via-[#151a16]/80 to-transparent"></div>

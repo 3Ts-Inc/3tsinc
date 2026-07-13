@@ -2,35 +2,11 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhyChoose from "@/components/WhyChoose";
+import { getThreeTsContent } from "@/lib/siteContent";
 
-const methodologyServices = [
-  {
-    title: "Facilitation",
-    label: "For consequential rooms",
-    description:
-      "Most gatherings generate energy without producing decisions. I design and hold the rooms where that changes: politically sensitive multi-stakeholder processes, leadership off-sites, cross-functional strategy sessions, and decision convenings where alignment is earned and owned, rather than assumed. My methods do not manage the conversation, but listen for what is underneath it: the underlying narrative, the unspoken resistance, the connection no one has yet vocalized. I play that back with precision, so senior teams can make informed choices and leave with decisions that hold under the stress of real implementation.",
-  },
-  {
-    title: "Coaching",
-    label: "For leaders at inflection points",
-    description:
-      "I work with senior leaders who are navigating complexity, carrying transformation mandates, or standing at a genuine inflection point in their careers. My approach is disciplined, warm, and direct: I hold the structure of our work firmly while creating the space and safety for real exploration. I listen for the person beneath the presenting problem and reflect it with precision: who you are in this situation, what grounds you, what gets in your way, and what a considered next step looks like from where you actually stand, not where the system expects you to be.",
-  },
-  {
-    title: "Program Design & Management",
-    label: "For plans that must survive contact with reality",
-    description:
-      "I design programs to produce real change in real conditions: for communities, institutions, and the people carrying the work inside them. Every design begins with honest diagnosis: what the data shows, what those closest to the issue actually experience, and where those two accounts diverge. I then build architecture around a shared, clearly articulated goal while keeping the path to it deliberately flexible, with governance, accountability, equity checkpoints, and guardrail agreements designed in from the start.",
-  },
-  {
-    title: "Organizational Development & Change Management",
-    label: "Because announced change is not adopted change",
-    description:
-      "Organizational change fails most often not because the strategy was wrong but because the conditions for adoption were never built. I work with leaders and teams to close that gap: diagnosing where the real friction sits, designing interventions that address it, and building the governance, communication, and capability structures that make new ways of working stick. My work is to help organizations move from intention to embedded practice.",
-  },
-];
+export default async function ApproachPage() {
+  const { approach } = await getThreeTsContent();
 
-export default function ApproachPage() {
   return (
     <main className="flex min-h-screen flex-col bg-cream text-charcoal">
       <Navbar />
@@ -53,11 +29,12 @@ export default function ApproachPage() {
 
           <div className="relative min-h-[360px] overflow-hidden border border-charcoal/10 bg-[#151a16] shadow-[0_28px_90px_-70px_rgba(30,37,32,0.7)] md:min-h-[500px]">
             <Image
-              src="/hero-concepts/01-window-trees.png"
-              alt="Quiet room with window light, a table, and trees beyond the glass"
+              src={approach.image.src}
+              alt={approach.image.alt}
               fill
               priority
-              className="object-cover object-center"
+              className="object-cover"
+              style={{ objectPosition: approach.image.position }}
               sizes="(min-width: 1024px) 46vw, 100vw"
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(21,26,22,0.02),rgba(21,26,22,0.38))]" />
@@ -69,7 +46,7 @@ export default function ApproachPage() {
 
       <section className="w-full px-6 py-24 md:px-16 lg:px-24">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-12 grid gap-8 lg:grid-cols-[0.62fr_0.9fr] lg:items-end">
+          <div className="mb-12 max-w-3xl">
             <div>
               <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
                 My Methodology
@@ -78,31 +55,34 @@ export default function ApproachPage() {
                 Find the service you need, then go deeper.
               </h2>
             </div>
-            <p className="max-w-2xl text-lg leading-relaxed text-charcoal/66">
-              Clients often arrive through one specific need. This structure makes each service easier to scan while keeping the underlying approach intact.
-            </p>
           </div>
 
           <div className="grid gap-4 lg:grid-cols-2">
-            {methodologyServices.map((service, index) => (
+            {approach.services.map((service, index) => (
               <article
                 key={service.title}
-                className="border border-charcoal/10 bg-[#fcfbf9] p-6 transition-colors hover:border-gold/45 hover:bg-white md:p-8"
+                className={`border border-charcoal/10 bg-[#fcfbf9] p-6 transition-colors hover:border-gold/45 hover:bg-white md:p-8 ${
+                  index === 2 ? "lg:col-span-2" : ""
+                }`}
               >
                 <div className="flex items-start justify-between gap-6">
                   <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
                     0{index + 1}
                   </span>
-                  <span className="max-w-[12rem] text-right text-xs font-semibold uppercase tracking-[0.16em] text-charcoal/38">
+                  <span className={`${index === 2 ? "max-w-[24rem]" : "max-w-[12rem]"} text-right text-xs font-semibold uppercase tracking-[0.16em] text-charcoal/38`}>
                     {service.label}
                   </span>
                 </div>
                 <h3 className="mt-7 font-serif text-3xl leading-tight text-charcoal md:text-4xl">
                   {service.title}
                 </h3>
-                <p className="mt-6 text-base leading-relaxed text-charcoal/68 md:text-lg">
-                  {service.description}
-                </p>
+                <div className={`mt-6 text-base leading-relaxed text-charcoal/68 md:text-lg ${index === 2 ? "space-y-6 lg:columns-2 lg:gap-12" : ""}`}>
+                  {service.description.map((paragraph) => (
+                    <p key={paragraph} className="mb-6 last:mb-0 break-inside-avoid">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
               </article>
             ))}
           </div>

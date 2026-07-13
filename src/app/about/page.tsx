@@ -2,8 +2,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import Image from "next/image";
+import { getThreeTsContent } from "@/lib/siteContent";
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const { about } = await getThreeTsContent();
+
   return (
     <main className="flex min-h-screen flex-col bg-cream text-charcoal">
       <Navbar />
@@ -26,11 +29,12 @@ export default function AboutPage() {
             </div>
             <div className="relative min-h-[300px] overflow-hidden border border-charcoal/10 bg-[#151a16] shadow-[0_24px_80px_-52px_rgba(30,37,32,0.5)] md:min-h-[360px]">
               <Image
-                src="/shareef-khatib.webp"
-                alt="Portrait of Shareef Khatib"
+                src={about.image.src}
+                alt={about.image.alt}
                 fill
                 priority
-                className="object-cover object-center"
+                className="object-cover"
+                style={{ objectPosition: about.image.position }}
                 sizes="(min-width: 1024px) 320px, 100vw"
               />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(21,26,22,0.02),rgba(21,26,22,0.2))]" />
@@ -112,7 +116,7 @@ export default function AboutPage() {
             </div>
 
             <blockquote className="mt-16 border-l-4 border-gold pl-6 italic text-xl text-charcoal/80 font-serif">
-              &ldquo;I hope that together, our work contributes to a world where collaboration yields outcomes worthy of the people who need them most.&rdquo;
+              &ldquo;{about.quote}&rdquo;
             </blockquote>
           </div>
         </div>

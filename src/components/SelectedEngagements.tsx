@@ -1,33 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-
-const cases = [
-  {
-    number: "01",
-    title: "Saudi Arabia \u2014\nVision 2030 Assessment",
-    description:
-      "Currently supporting the World Bank team in the assessment of Saudi Arabia\u2019s Vision 2030 progress and next steps.",
-  },
-  {
-    number: "02",
-    title: "Portland \u2014\nCommunity Safety Transformation",
-    description:
-      "Led citywide initiative to realign governance and community engagement around gun violence and safety. 43% reduction in predicted gun violence and 24% mitigation of predicted homicides over three months.",
-  },
-  {
-    number: "03",
-    title: "Executive and Leadership Coach to INGOs",
-    description:
-      "Currently providing executive coaching support to multiple MENA and Africa senior leaders in a leading global humanitarian confederation working to combat systemic poverty and inequality.",
-  },
-  {
-    number: "04",
-    title: "DC Public Schools \u2014\nLeadership Team Support",
-    description:
-      "Facilitated team building retreats and served as technical adviser for public sector leaders navigating the increased risk of gun violence in schools.",
-  },
-];
+import type { Engagement } from "@/lib/siteContent";
 
 const mapDots = Array.from({ length: 220 }, (_, i) => {
   const x = (i * 73) % 1000;
@@ -51,7 +25,7 @@ const cardVariants: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
 };
 
-export default function SelectedEngagements() {
+export default function SelectedEngagements({ cases }: { cases: Engagement[] }) {
   return (
     <section className="w-full bg-cream py-24 px-6 md:px-16 lg:px-24 border-t border-[#edebe4] relative overflow-hidden">
       <div className="absolute right-0 top-0 w-full lg:w-[60%] h-[500px] opacity-10 pointer-events-none">
@@ -94,7 +68,7 @@ export default function SelectedEngagements() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
         >
           {cases.map((item, index) => (
             <motion.div

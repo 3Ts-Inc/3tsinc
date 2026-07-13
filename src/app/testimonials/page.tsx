@@ -138,7 +138,7 @@ export default function TestimonialsPage() {
         </div>
       </section>
 
-      {/* Organizational Development & Change Management */}
+      {/* Inclusive Design */}
       <section className="relative w-full py-32 px-6 md:px-16 lg:px-24 bg-[#111]">
         <div className="absolute inset-0 z-0">
           <Image
@@ -151,7 +151,7 @@ export default function TestimonialsPage() {
         </div>
         <div className="relative z-10 max-w-7xl mx-auto">
           <h2 className="font-serif text-4xl text-cream mb-16 pb-8 border-b border-cream/10">
-            Organizational Development &amp; Change Management
+            Inclusive Design
           </h2>
           {odChange.map((t, i) => (
             <div key={i} className="flex flex-col max-w-3xl">

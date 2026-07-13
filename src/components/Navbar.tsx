@@ -138,7 +138,7 @@ export default function Navbar({ transparentOnTop = false }: { transparentOnTop?
                   Shareef 3Ts Consulting
                 </span>
                 <span className="mt-1 whitespace-nowrap font-sans text-[10px] uppercase tracking-widest text-gold md:text-xs">
-                  Thoroughly. Thought. Through.
+                  Thoroughly Thought Through.
                 </span>
               </div>
             </Link>

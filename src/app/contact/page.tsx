@@ -1,56 +1,52 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Image from "next/image";
+import { getThreeTsContent } from "@/lib/siteContent";
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const { contact } = await getThreeTsContent();
+
   return (
     <main className="flex min-h-screen flex-col bg-cream text-charcoal">
       <Navbar />
-      <section className="w-full py-32 px-6 md:px-16 lg:px-24 min-h-[60vh] flex flex-col justify-center items-center text-center">
-        <div className="max-w-2xl mx-auto flex flex-col items-center">
-          <div className="flex flex-col items-center space-y-4 mb-8">
-            <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">
-              Contact
-            </span>
-            <div className="w-12 h-[2px] bg-gold/60"></div>
-          </div>
-          <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight text-charcoal mb-8">
-            Let&apos;s Chat
-          </h1>
-          <Image
-            src="/3ts-logo-full-dark.png"
-            alt="3Ts Consulting logo"
-            width={360}
-            height={219}
-            className="mb-10 h-auto w-48 md:w-56"
-            priority
-          />
-          <p className="text-charcoal/70 text-lg md:text-xl max-w-lg leading-relaxed mb-12">
-            I&apos;d love to hear from you. Reach out to discuss how we might work together to support your individuals, teams, and organization.
-          </p>
+      <section className="flex min-h-[72vh] w-full items-center px-6 py-28 md:px-16 lg:px-24 lg:py-32">
+        <div className="mx-auto grid w-full max-w-7xl gap-12 lg:grid-cols-[0.78fr_1fr] lg:items-center">
+          <div className="flex flex-col items-start text-left">
+            <div className="mb-8 flex flex-col items-start space-y-4">
+              <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">
+                Contact
+              </span>
+              <div className="w-12 h-[2px] bg-gold/60"></div>
+            </div>
+            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight text-charcoal mb-8">
+              Let&apos;s Chat
+            </h1>
+            <p className="mb-12 max-w-lg text-lg leading-relaxed text-charcoal/70 md:text-xl">
+              {contact.introduction}
+            </p>
 
-          <div className="space-y-8 mb-16">
-            <div className="flex flex-col items-center">
+            <div className="mb-12 space-y-8">
+              <div className="flex flex-col items-start">
               <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase mb-2">Email</span>
               <a
-                href="mailto:shareef@3ts-inc.com"
+                href={`mailto:${contact.email}`}
                 className="font-serif text-2xl text-charcoal hover:text-gold transition-colors"
               >
-                shareef@3ts-inc.com
+                {contact.email}
               </a>
-            </div>
-            <div className="flex flex-col items-center">
+              </div>
+              <div className="flex flex-col items-start">
               <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase mb-2">Office Locations</span>
-              <p className="text-charcoal/70 text-lg">Washington, DC &middot; London, UK &middot; Amman, JO</p>
+              <p className="text-charcoal/70 text-lg">{contact.locations}</p>
+              </div>
             </div>
-          </div>
 
-          <div className="flex items-center gap-4">
+            <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <a
-              href="mailto:shareef@3ts-inc.com"
+              href={`mailto:${contact.email}`}
               className="bg-[#2A372C] text-white px-8 py-4 text-sm tracking-widest uppercase font-medium hover:bg-[#1E2520] transition-all transform hover:-translate-y-1 active:translate-y-0 shadow-lg"
             >
-              Email shareef@3ts-inc.com
+              Email {contact.email}
             </a>
             <a
               href="https://calendly.com/shareef3ts/a-30min-slot-with-shareef"
@@ -60,6 +56,23 @@ export default function ContactPage() {
             >
               Book Now
             </a>
+            </div>
+          </div>
+
+          <div className="relative min-h-[430px] overflow-hidden border border-charcoal/10 bg-[#151a16] shadow-[0_28px_90px_-58px_rgba(30,37,32,0.65)] md:min-h-[580px]">
+            <Image
+              src={contact.image.src}
+              alt={contact.image.alt}
+              fill
+              priority
+              className="object-cover"
+              style={{ objectPosition: contact.image.position }}
+              sizes="(min-width: 1024px) 52vw, 100vw"
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(21,26,22,0.02),rgba(21,26,22,0.25))]" />
+            <div className="absolute inset-x-0 bottom-0 border-t border-white/10 bg-charcoal/70 px-6 py-4 text-xs font-medium uppercase tracking-[0.18em] text-cream/65 backdrop-blur-sm">
+              In the room · Amman
+            </div>
           </div>
         </div>
       </section>

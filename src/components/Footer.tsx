@@ -36,7 +36,7 @@ export default function Footer() {
             className="h-auto w-44 md:w-56"
           />
           <div className="mt-6 text-gold text-xs tracking-[0.2em] uppercase mb-6">
-            Thoroughly. Thought. Through.
+            Thoroughly Thought Through.
           </div>
           <div className="text-cream/40 text-xs tracking-widest uppercase">
             &copy; {new Date().getFullYear()} - Shareef - 3Ts Consulting

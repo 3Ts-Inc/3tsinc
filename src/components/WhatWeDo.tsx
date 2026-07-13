@@ -2,33 +2,7 @@
 
 import { motion, type Variants } from "framer-motion";
 import Link from "next/link";
-
-const services = [
-  {
-    number: "01",
-    title: "Coaching",
-    description:
-      "Navigate challenge or change, enhance strengths, build resilience, and present your best self with clarity and confidence. Using thought-provoking, self-analytic and creative processes to help you build on strengths, identify blind spots, and fulfill your potential.",
-  },
-  {
-    number: "02",
-    title: "Facilitation, Teambuilding & Training",
-    description:
-      "Dismantle limiting structures with tailored engagement, intercultural insights, and practical tools that drive meaningful improvements in team dynamics. Fostering inclusion and liberation from entrenched structures and thinking.",
-  },
-  {
-    number: "03",
-    title: "Organizational Development & Change Management",
-    description:
-      "Strengthen leadership, collaboration, and operational effectiveness with practical, actionable strategies for lasting change. Grounded in neuroscience and human behavior, with a consistent focus on implementable solutions.",
-  },
-  {
-    number: "04",
-    title: "Program Design",
-    description:
-      "Design and deliver catalytic programming using locally-led, adaptive, human-centered approaches, and drawing on inclusive engagement to define challenges and solutions in the narrative of those living them.",
-  },
-];
+import type { HomeService } from "@/lib/siteContent";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -43,7 +17,7 @@ const cardVariants: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
 };
 
-export default function WhatWeDo() {
+export default function WhatWeDo({ services }: { services: HomeService[] }) {
   return (
     <section className="w-full bg-cream py-24 px-6 md:px-16 lg:px-24 border-t border-[#edebe4]">
       <div className="max-w-7xl mx-auto">
@@ -86,7 +60,9 @@ export default function WhatWeDo() {
               key={index}
               variants={cardVariants}
               whileHover={{ y: -5 }}
-              className="bg-[#fcfbf9] border border-charcoal/5 p-10 md:p-14 flex flex-col md:flex-row shadow-[0_10px_40px_-15px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.06)] transition-all duration-300"
+              className={`bg-[#fcfbf9] border border-charcoal/5 p-10 md:p-14 flex flex-col md:flex-row shadow-[0_10px_40px_-15px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.06)] transition-all duration-300 ${
+                index === 2 ? "md:col-span-2" : ""
+              }`}
             >
               <div className="flex items-start mb-6 md:mb-0 md:mr-10 shrink-0">
                 <span className="font-serif text-4xl md:text-5xl text-gold">
@@ -98,9 +74,11 @@ export default function WhatWeDo() {
                 <h3 className="font-serif text-2xl md:text-3xl text-charcoal mb-4">
                   {item.title}
                 </h3>
-                <p className="text-charcoal/70 text-sm md:text-base leading-relaxed">
-                  {item.description}
-                </p>
+                <div className={`text-charcoal/70 text-sm md:text-base leading-relaxed ${index === 2 ? "md:grid md:grid-cols-2 md:gap-10" : "space-y-4"}`}>
+                  {item.description.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
               </div>
             </motion.div>
           ))}
