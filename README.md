@@ -30,9 +30,3 @@ Set:
 ```text
 NEXT_PUBLIC_SITE_URL=https://3ts-inc.com
 ```
-
-See:
-
-- `HANDOFF.md` for hosting, domain, and ownership instructions.
-- `CMS_PLAN.md` for the content-management implementation.
-- `CMS_SETUP.md` for the prepared Sanity Studio and exact account/Vercel setup.
