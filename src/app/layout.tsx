@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 const outfit = Outfit({
   subsets: ["latin"],

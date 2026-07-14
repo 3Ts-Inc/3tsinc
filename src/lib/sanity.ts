@@ -44,7 +44,7 @@ export async function fetchCmsDocument<T>(
   if (!client) return fallback;
 
   try {
-    const document = await client.fetch<unknown>(query, {}, { next: { revalidate: 60 } });
+    const document = await client.fetch<unknown>(query, {}, { cache: "no-store" });
     return mergeContent(fallback, document);
   } catch (error) {
     console.warn("Sanity content fetch failed; using checked-in content.", error);
