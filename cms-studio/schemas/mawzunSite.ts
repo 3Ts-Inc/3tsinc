@@ -1,62 +1,51 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 import { imageField } from "./shared";
 
+const string = (name: string, title: string) => defineField({ name, title, type: "string" });
+const text = (name: string, title: string, rows = 3) => defineField({ name, title, type: "text", rows });
+const strings = (name: string, title: string) => defineField({ name, title, type: "array", of: [defineArrayMember({ type: "string" })] });
+const testimonialArray = (name: string, title: string, category = false) => defineField({ name, title, type: "array", of: [defineArrayMember({ name: "testimonial", title: "Testimonial", type: "object", fields: [...(category ? [string("category", "Category")] : []), text("quote", "Quotation", 8), string("author", "Author"), string("title", "Author title")], preview: { select: { title: "author", subtitle: category ? "category" : "title" } } })] });
+
 export const mawzunSite = defineType({
-  name: "mawzunSite",
-  title: "Mawzun site content",
-  type: "document",
-  groups: [
-    { name: "home", title: "Home" },
-    { name: "services", title: "Services" },
-    { name: "contact", title: "Contact" },
-  ],
+  name: "mawzunSite", title: "Mawzun site content", type: "document",
+  groups: [{ name: "global", title: "Shared" }, { name: "home", title: "Home" }, { name: "about", title: "About" }, { name: "approach", title: "Approach" }, { name: "impact", title: "Impact" }, { name: "testimonials", title: "Testimonials" }, { name: "services", title: "Services" }, { name: "contact", title: "Contact" }],
   fields: [
-    defineField({
-      name: "home",
-      title: "Home page",
-      type: "object",
-      group: "home",
-      fields: [
-        imageField("secondImage", "Second homepage image"),
-        imageField("shareefImage", "Homepage Shareef image"),
-      ],
-    }),
-    defineField({
-      name: "services",
-      title: "Services page",
-      type: "object",
-      group: "services",
-      fields: [
-        imageField("mainImage", "Main services image"),
-        imageField("shareefImage", "Services Shareef image"),
-      ],
-    }),
-    defineField({
-      name: "contact",
-      title: "Contact page",
-      type: "object",
-      group: "contact",
-      fields: [
-        defineField({ name: "heading", title: "Heading", type: "string" }),
-        defineField({
-          name: "introduction",
-          title: "Introduction paragraphs",
-          type: "array",
-          of: [defineArrayMember({ type: "text", rows: 4 })],
-        }),
-        defineField({ name: "email", title: "Email", type: "string" }),
-        defineField({ name: "locations", title: "Locations", type: "string" }),
-        defineField({
-          name: "confidentiality",
-          title: "Confidentiality notes",
-          type: "array",
-          of: [defineArrayMember({ type: "text", rows: 3 })],
-        }),
-        imageField("image", "Contact image"),
-      ],
-    }),
+    defineField({ name: "global", title: "Shared site content", type: "object", group: "global", fields: [
+      defineField({ name: "navigation", title: "Navigation", type: "array", of: [defineArrayMember({ name: "navigationLink", title: "Navigation link", type: "object", fields: [string("label", "Label"), string("href", "Path")], preview: { select: { title: "label", subtitle: "href" } } })] }),
+      string("email", "Email"), string("footerEyebrow", "Footer eyebrow"), string("footerHeading", "Footer heading"), string("name", "Brand name"), string("shortName", "Short brand name"), string("arabicName", "Arabic name"), string("legalName", "Copyright name"), string("tagline", "Tagline"), imageField("logo", "Logo"),
+    ] }),
+    defineField({ name: "home", title: "Home page", type: "object", group: "home", fields: [
+      text("heroHeading", "Hero heading"), text("heroIntroduction", "Hero introduction", 4), string("heroCta", "Hero action label"),
+      string("audiencesEyebrow", "Audience eyebrow"), text("audiencesHeading", "Audience heading"), strings("audiencesIntroduction", "Audience paragraphs"), strings("audiences", "Audience types"),
+      string("servicesEyebrow", "Services eyebrow"), text("servicesHeading", "Services heading"), string("servicesHint", "Services interaction hint"),
+      defineField({ name: "services", title: "Engagements", type: "array", of: [defineArrayMember({ name: "homeService", title: "Engagement", type: "object", fields: [string("id", "ID"), string("number", "Number"), string("title", "Title"), string("duration", "Duration"), string("essence", "Short purpose"), text("description", "Description", 5)], preview: { select: { title: "title", subtitle: "duration" } } })] }),
+      string("servicesCta", "Services action label"), string("patternsEyebrow", "Patterns eyebrow"), text("patternsHeading", "Patterns heading"),
+      defineField({ name: "patterns", title: "Patterns", type: "array", of: [defineArrayMember({ name: "pattern", title: "Pattern", type: "object", fields: [string("id", "ID"), text("text", "Text")], preview: { select: { title: "text" } } })] }),
+      string("impactEyebrow", "Impact eyebrow"), text("impactHeading", "Impact heading"), strings("impactLabels", "Impact labels"),
+      defineField({ name: "impactStats", title: "Impact statistics", type: "array", of: [defineArrayMember({ name: "impactStat", title: "Statistic", type: "object", fields: [string("value", "Value"), text("text", "Description", 5)], preview: { select: { title: "value", subtitle: "text" } } })] }),
+      string("testimonialsEyebrow", "Testimonials eyebrow"), text("testimonialsHeading", "Testimonials heading"), testimonialArray("testimonials", "Homepage testimonials"), string("testimonialsCta", "Testimonials action label"),
+      string("engagementsEyebrow", "Engagements eyebrow"), text("engagementsHeading", "Engagements heading"), text("engagementsIntroduction", "Engagements introduction"), string("engagementDetailLabel", "Engagement detail label"), string("engagementsCta", "Engagements action label"),
+      defineField({ name: "engagements", title: "Selected engagements", type: "array", of: [defineArrayMember({ name: "engagement", title: "Engagement", type: "object", fields: [string("number", "Number"), text("title", "Title"), text("description", "Description", 5), defineField({ name: "details", title: "Details", type: "array", of: [defineArrayMember({ name: "engagementDetail", title: "Detail", type: "object", fields: [string("label", "Label"), text("value", "Value")], preview: { select: { title: "label", subtitle: "value" } } })] })], preview: { select: { title: "title", subtitle: "number" } } })] }),
+      defineField({ name: "aboutSection", title: "About section", type: "object", fields: [string("eyebrow", "Eyebrow"), text("heading", "Heading"), strings("paragraphs", "Paragraphs"), defineField({ name: "statistics", title: "Statistics", type: "array", of: [defineArrayMember({ name: "aboutStatistic", title: "Statistic", type: "object", fields: [string("value", "Value"), text("label", "Label")], preview: { select: { title: "value", subtitle: "label" } } })] }), string("cta", "Action label"), string("imageName", "Image name"), string("imageRole", "Image role")] }),
+      imageField("heroDesktopImage", "Desktop hero image"), imageField("heroMobileImage", "Mobile hero image"), imageField("conveningImage", "Convening image"), imageField("secondImage", "Second homepage image"), imageField("shareefImage", "Homepage Shareef image"),
+    ] }),
+    defineField({ name: "about", title: "About page", type: "object", group: "about", fields: [
+      string("eyebrow", "Eyebrow"), string("heading", "Heading"), text("subheading", "Subheading"), strings("introduction", "Introduction paragraphs"), imageField("image", "Portrait"), text("imageCaption", "Image caption"),
+      string("regionEyebrow", "Region eyebrow"), string("regionHeading", "Region heading"), text("regionText", "Region text", 7), string("workEyebrow", "Working style eyebrow"), text("workHeading", "Working style heading"), strings("workParagraphs", "Working style paragraphs"),
+      string("independenceEyebrow", "Independent judgment eyebrow"), text("independenceLead", "Independent judgment lead", 6), text("independenceText", "Independent judgment body", 6),
+      string("competenciesHeading", "Competencies heading"), strings("competencies", "Competencies"), string("credentialsHeading", "Credentials heading"), strings("credentials", "Credentials"), text("closingLead", "Closing statement", 5), text("closingQuote", "Closing quotation"),
+    ] }),
+    defineField({ name: "approach", title: "Approach page", type: "object", group: "approach", fields: [
+      string("eyebrow", "Eyebrow"), text("heading", "Heading"), text("lead", "Lead", 5), text("introduction", "Introduction", 6), imageField("image", "Approach image"), string("patternsEyebrow", "Patterns eyebrow"), text("patternsHeading", "Patterns heading"), strings("patterns", "Patterns"), string("workEyebrow", "Working method eyebrow"), text("workHeading", "Working method heading"),
+      defineField({ name: "workBlocks", title: "Working method sections", type: "array", of: [defineArrayMember({ name: "workBlock", title: "Section", type: "object", fields: [text("title", "Title"), text("body", "Body", 8), text("service", "Related service", 3)], preview: { select: { title: "title", subtitle: "service" } } })] }),
+    ] }),
+    defineField({ name: "impact", title: "Impact page", type: "object", group: "impact", fields: [
+      string("eyebrow", "Eyebrow"), string("heading", "Heading"), text("introduction", "Introduction", 5), text("qualifier", "Confidentiality qualifier", 4), string("openLabel", "Open label"), string("closeLabel", "Close label"),
+      defineField({ name: "sections", title: "Case groups", type: "array", of: [defineArrayMember({ name: "impactSection", title: "Case group", type: "object", fields: [string("id", "ID"), string("eyebrow", "Eyebrow"), text("title", "Title"), text("intro", "Introduction", 5), defineField({ name: "cases", title: "Cases", type: "array", of: [defineArrayMember({ name: "impactCase", title: "Case", type: "object", fields: [text("title", "Title"), text("body", "Body", 6), strings("results", "Results")], preview: { select: { title: "title", subtitle: "body" } } })] })], preview: { select: { title: "eyebrow", subtitle: "title" } } })] }),
+    ] }),
+    defineField({ name: "testimonials", title: "Testimonials page", type: "object", group: "testimonials", fields: [string("eyebrow", "Eyebrow"), text("heading", "Heading"), text("introduction", "Introduction", 5), testimonialArray("reflections", "Client reflections", true), text("ctaText", "Closing invitation"), string("ctaLabel", "Email action label")] }),
+    defineField({ name: "services", title: "Services page", type: "object", group: "services", fields: [string("eyebrow", "Eyebrow"), text("heading", "Heading"), string("introEyebrow", "Introduction eyebrow"), text("introLead", "Introduction lead"), text("introText", "Introduction body"), string("processEyebrow", "Process eyebrow"), strings("processSteps", "Process steps"), imageField("mainImage", "Main services image"), imageField("shareefImage", "Services Shareef image"), string("imageCaption", "Image caption"), string("roomEyebrow", "Room eyebrow"), text("roomLead", "Room lead"), text("roomText", "Room body", 5)] }),
+    defineField({ name: "contact", title: "Contact page", type: "object", group: "contact", fields: [string("eyebrow", "Eyebrow"), string("heading", "Heading"), defineField({ name: "introduction", title: "Introduction paragraphs", type: "array", of: [defineArrayMember({ type: "text", rows: 4 })] }), string("emailLabel", "Email label"), string("email", "Email"), string("locations", "Locations"), defineField({ name: "confidentiality", title: "Confidentiality notes", type: "array", of: [defineArrayMember({ type: "text", rows: 3 })] }), string("imageCaption", "Image caption"), imageField("image", "Contact image")] }),
   ],
-  preview: {
-    prepare: () => ({ title: "Mawzun Advisory", subtitle: "Website content" }),
-  },
+  preview: { prepare: () => ({ title: "Mawzun Advisory", subtitle: "Website content" }) },
 });

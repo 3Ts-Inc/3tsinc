@@ -3,30 +3,9 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import type { SiteImage } from "@/lib/siteContent";
+import type { SiteImage, ThreeTsContent } from "@/lib/siteContent";
 
-const testimonials = [
-  {
-    quote:
-      "Shareef has been a great coach for me as a new manager. He has provided me tools to work through customized strategies for dealing with new management situations and to empower my team.",
-    author: "Andrew F.",
-    title: "Division Lead, International Assistance \u2013 Energy Sector",
-  },
-  {
-    quote:
-      "When I partnered with Shareef in a Program to strengthen the City of Portland\u2019s approach to gun violence prevention and intervention, I saw firsthand what visionary leadership can do.",
-    author: "Rose King",
-    title: "Principal, Hearts & Minds Communications",
-  },
-  {
-    quote:
-      "Shareef knew how to navigate criticism and stay the course, transparently and frequently sharing information about the work, building relationships, and not bending to the pressure of the \u201Cway things are always done.\u201D",
-    author: "Lisa Freeman",
-    title: "Chief of Staff for Portland City Councilor Sameer Kanal",
-  },
-];
-
-export default function Testimonials({ backgroundImage }: { backgroundImage: SiteImage }) {
+export default function Testimonials({ content, backgroundImage }: { content: ThreeTsContent["home"]["testimonials"]; backgroundImage: SiteImage }) {
   return (
     <section className="relative w-full flex flex-col justify-between">
       {/* Background Image */}
@@ -46,14 +25,14 @@ export default function Testimonials({ backgroundImage }: { backgroundImage: Sit
         {/* Header */}
         <div className="flex flex-col items-start space-y-4 mb-16">
           <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">
-              What Clients are Saying
+              {content.eyebrow}
           </span>
           <div className="w-12 h-[2px] bg-gold/60"></div>
         </div>
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 mb-16">
-          {testimonials.map((t, i) => (
+          {content.items.map((t, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
@@ -88,9 +67,9 @@ export default function Testimonials({ backgroundImage }: { backgroundImage: Sit
           transition={{ duration: 0.8, delay: 0.5 }}
           className="flex items-center"
         >
-          <Link href="/testimonials" className="group flex flex-col">
+          <Link href={content.cta.href} className="group flex flex-col">
             <span className="text-gold text-sm font-semibold tracking-[0.15em] uppercase pb-2">
-              Read More Testimonials <span className="group-hover:ml-2 transition-all inline-block">&rarr;</span>
+              {content.cta.label} <span className="group-hover:ml-2 transition-all inline-block">&rarr;</span>
             </span>
             <div className="w-full h-px bg-gold/30 group-hover:bg-gold transition-colors"></div>
           </Link>

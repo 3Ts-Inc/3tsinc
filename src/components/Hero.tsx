@@ -37,7 +37,7 @@ export default function Hero({ content }: { content: ThreeTsContent["home"] }) {
         >
           <div className="mb-10 flex flex-col items-start space-y-4 md:mb-12">
             <span className="max-w-[18rem] text-xs font-semibold uppercase leading-relaxed tracking-[0.2em] text-gold md:max-w-none">
-              Considered collaboration. Consequential change.
+              {content.eyebrow}
             </span>
             <div className="h-[2px] w-12 bg-gold/70" />
           </div>
@@ -52,18 +52,18 @@ export default function Hero({ content }: { content: ThreeTsContent["home"] }) {
 
           <div className="flex flex-wrap items-center gap-4">
             <Link
-              href="/contact"
+              href={content.primaryCta.href}
               className="bg-cream px-8 py-4 text-sm font-medium uppercase tracking-widest text-charcoal shadow-lg transition-all hover:-translate-y-1 hover:bg-white active:translate-y-0"
             >
-              Get Started &rarr;
+              {content.primaryCta.label} &rarr;
             </Link>
             <a
-              href="https://calendly.com/shareef3ts/a-30min-slot-with-shareef"
+              href={content.secondaryCta.href}
               target="_blank"
               rel="noopener noreferrer"
               className="border border-cream/30 px-6 py-4 text-sm font-medium uppercase tracking-widest text-cream transition-all hover:bg-cream/10"
             >
-              Book Now
+              {content.secondaryCta.label}
             </a>
           </div>
         </motion.div>

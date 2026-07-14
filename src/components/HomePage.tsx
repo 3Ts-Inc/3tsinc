@@ -12,15 +12,15 @@ import type { ThreeTsContent } from "@/lib/siteContent";
 export default function HomePage({ content }: { content: ThreeTsContent }) {
   return (
     <main className="flex min-h-screen flex-col bg-cream text-charcoal">
-      <Navbar transparentOnTop />
+      <Navbar content={content.global} transparentOnTop />
       <Hero content={content.home} />
-      <WhoWeWorkWith />
-      <WhatWeDo services={content.home.services} />
-      <WhyAndImpact />
-      <SelectedEngagements cases={content.home.engagements} />
-      <AboutUs />
-      <Testimonials backgroundImage={content.home.testimonialImage} />
-      <Footer />
+      <WhoWeWorkWith content={content.home.audiences} />
+      <WhatWeDo content={content.home} />
+      <WhyAndImpact content={content.home} />
+      <SelectedEngagements content={content.home} />
+      <AboutUs content={content.home.aboutSection} />
+      <Testimonials content={content.home.testimonials} backgroundImage={content.home.testimonialImage} />
+      <Footer content={content.global} />
     </main>
   );
 }

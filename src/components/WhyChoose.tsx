@@ -2,45 +2,7 @@
 
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { useState } from "react";
-
-type Principle = {
-  title: string;
-  text: string;
-  short: string;
-};
-
-const principles: Principle[] = [
-  {
-    title: "Tailored Solutions",
-    short: "Designed around the real context.",
-    text: "There is no one size fits all. I appreciatively enquire to tailor my engagement to meet your specific needs, challenges and goals.",
-  },
-  {
-    title: "Walking the Talk",
-    short: "The work models the outcome.",
-    text: "Together, we model effective teamwork by setting shared goals, clarifying roles, and communicating openly.",
-  },
-  {
-    title: "One Team Mindset",
-    short: "Shared ownership of what follows.",
-    text: "We share responsibility for outcomes, successes and setbacks alike, because we will rise or fall together.",
-  },
-  {
-    title: "Inclusive and Accountable",
-    short: "Every voice has a role and a standard.",
-    text: "We honor diverse perspectives, foster mutual accountability, and create space for every voice to be heard.",
-  },
-  {
-    title: "Creativity with Purpose",
-    short: "Inventive where it helps the work.",
-    text: "We embrace fun and creativity as important tools for innovation, connection, and sustainable progress.",
-  },
-  {
-    title: "Serious About Work, Light on Ego",
-    short: "High standards without the posturing.",
-    text: "Together we will take our mission, our stakeholders, and each other - but not ourselves - VERY seriously.",
-  },
-];
+import type { ThreeTsContent } from "@/lib/siteContent";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -100,18 +62,18 @@ const mosaicStyles = [
   },
 ];
 
-function Eyebrow({ dark = false }: { dark?: boolean }) {
+function Eyebrow({ label, dark = false }: { label: string; dark?: boolean }) {
   return (
     <div className="mb-8 flex flex-col items-start space-y-4">
       <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-        Why Choose 3Ts
+        {label}
       </span>
       <div className={`h-[2px] w-12 ${dark ? "bg-gold/70" : "bg-gold/60"}`} />
     </div>
   );
 }
 
-function Mosaic() {
+function Mosaic({ content }: { content: ThreeTsContent["home"]["principles"] }) {
   const [active, setActive] = useState<number | null>(null);
   const reduceMotion = useReducedMotion();
   const rows = [
@@ -139,13 +101,13 @@ function Mosaic() {
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 grid gap-6 lg:grid-cols-[0.56fr_0.9fr] lg:items-end">
           <div>
-            <Eyebrow />
+            <Eyebrow label={content.eyebrow} />
             <h2 className="font-serif text-4xl leading-[1.05] text-charcoal md:text-5xl lg:text-6xl">
-              Why choose 3Ts?
+              {content.heading}
             </h2>
           </div>
           <p className="max-w-2xl text-base leading-relaxed text-charcoal/64 md:text-lg">
-            Six working principles, held in motion: structured enough to guide decisions, flexible enough to meet the room as it is.
+            {content.introduction}
           </p>
         </div>
 
@@ -163,7 +125,7 @@ function Mosaic() {
               className="grid grid-cols-1 gap-4 md:flex md:h-[420px] md:items-stretch"
             >
               {row.map((index) => {
-                const item = principles[index];
+                const item = content.items[index];
                 const isActive = active === index;
                 const style = mosaicStyles[index];
                 const activeSurface = "border-[#151a16] bg-[#151a16] text-cream shadow-[0_34px_95px_-52px_rgba(0,0,0,0.72)]";
@@ -234,7 +196,7 @@ function Mosaic() {
                               : "md:max-h-0 md:translate-y-2 md:overflow-hidden md:opacity-0 md:delay-0"
                           }`}
                         >
-                          {item.text}
+                          {item.description}
                         </p>
                       </div>
                     </div>
@@ -249,6 +211,6 @@ function Mosaic() {
   );
 }
 
-export default function WhyChoose() {
-  return <Mosaic />;
+export default function WhyChoose({ content }: { content: ThreeTsContent["home"]["principles"] }) {
+  return <Mosaic content={content} />;
 }

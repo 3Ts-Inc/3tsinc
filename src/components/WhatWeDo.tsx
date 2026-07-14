@@ -2,7 +2,7 @@
 
 import { motion, type Variants } from "framer-motion";
 import Link from "next/link";
-import type { HomeService } from "@/lib/siteContent";
+import type { ThreeTsContent } from "@/lib/siteContent";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -17,13 +17,13 @@ const cardVariants: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
 };
 
-export default function WhatWeDo({ services }: { services: HomeService[] }) {
+export default function WhatWeDo({ content }: { content: ThreeTsContent["home"] }) {
   return (
     <section className="w-full bg-cream py-24 px-6 md:px-16 lg:px-24 border-t border-[#edebe4]">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col items-start space-y-4 mb-8">
           <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">
-            Services
+            {content.servicesIntro.eyebrow}
           </span>
           <div className="w-12 h-[2px] bg-gold/60"></div>
         </div>
@@ -35,7 +35,7 @@ export default function WhatWeDo({ services }: { services: HomeService[] }) {
           transition={{ duration: 0.8 }}
           className="font-serif text-4xl md:text-5xl lg:text-6xl leading-tight tracking-tight text-charcoal max-w-4xl mb-20"
         >
-          Comprehensive services to support stronger leadership, teams and organizations.
+          {content.servicesIntro.heading}
         </motion.h2>
 
         <motion.p
@@ -45,7 +45,7 @@ export default function WhatWeDo({ services }: { services: HomeService[] }) {
           transition={{ duration: 0.8, delay: 0.15 }}
           className="text-charcoal/70 text-lg md:text-xl leading-relaxed max-w-3xl mb-16"
         >
-          Explore a range of coaching and consulting services designed to meet your unique organizational needs, build resilience, and drive sustainable improvements in how you make an impact in the world.
+          {content.servicesIntro.introduction}
         </motion.p>
 
         <motion.div
@@ -55,7 +55,7 @@ export default function WhatWeDo({ services }: { services: HomeService[] }) {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
-          {services.map((item, index) => (
+          {content.services.map((item, index) => (
             <motion.div
               key={index}
               variants={cardVariants}
@@ -92,11 +92,11 @@ export default function WhatWeDo({ services }: { services: HomeService[] }) {
           className="mt-16 flex items-center"
         >
           <Link
-            href="/services"
+            href={content.servicesIntro.cta.href}
             className="group flex flex-col"
           >
             <span className="text-gold text-sm font-semibold tracking-[0.15em] uppercase pb-2">
-              Learn More About Our Services <span className="group-hover:ml-2 transition-all inline-block">&rarr;</span>
+              {content.servicesIntro.cta.label} <span className="group-hover:ml-2 transition-all inline-block">&rarr;</span>
             </span>
             <div className="w-full h-px bg-gold/30 group-hover:bg-gold transition-colors"></div>
           </Link>

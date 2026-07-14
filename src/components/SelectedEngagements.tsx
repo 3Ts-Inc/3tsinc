@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import type { Engagement } from "@/lib/siteContent";
+import type { ThreeTsContent } from "@/lib/siteContent";
 
 const mapDots = Array.from({ length: 220 }, (_, i) => {
   const x = (i * 73) % 1000;
@@ -25,7 +25,7 @@ const cardVariants: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } },
 };
 
-export default function SelectedEngagements({ cases }: { cases: Engagement[] }) {
+export default function SelectedEngagements({ content }: { content: ThreeTsContent["home"] }) {
   return (
     <section className="w-full bg-cream py-24 px-6 md:px-16 lg:px-24 border-t border-[#edebe4] relative overflow-hidden">
       <div className="absolute right-0 top-0 w-full lg:w-[60%] h-[500px] opacity-10 pointer-events-none">
@@ -48,7 +48,7 @@ export default function SelectedEngagements({ cases }: { cases: Engagement[] }) 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col items-start space-y-4 mb-8">
           <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">
-            Selected Engagements
+            {content.engagementsEyebrow}
           </span>
           <div className="w-12 h-[2px] bg-gold/60"></div>
         </div>
@@ -60,7 +60,7 @@ export default function SelectedEngagements({ cases }: { cases: Engagement[] }) 
           transition={{ duration: 0.8 }}
           className="font-serif text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight text-charcoal mb-20"
         >
-          Selected engagements.
+          {content.engagementsHeading}
         </motion.h2>
 
         <motion.div
@@ -70,7 +70,7 @@ export default function SelectedEngagements({ cases }: { cases: Engagement[] }) 
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
         >
-          {cases.map((item, index) => (
+          {content.engagements.map((item, index) => (
             <motion.div
               key={index}
               variants={cardVariants}

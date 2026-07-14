@@ -6,7 +6,9 @@
     "dev": "sanity dev",
     "build": "sanity build",
     "deploy": "sanity deploy",
-    "seed": "tsx --env-file=.env.local scripts/seed.ts"
+    "seed": "tsx --env-file=.env.local scripts/seed.ts",
+    "audit:cms": "node scripts/audit-cms-coverage.mjs",
+    "verify:cms:live": "sanity exec scripts/verify-live-content.ts --with-user-token"
   },
   "dependencies": {
     "@sanity/client": "7.23.1",

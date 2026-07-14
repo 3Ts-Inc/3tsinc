@@ -5,25 +5,26 @@ import Footer from "@/components/Footer";
 import { getThreeTsContent } from "@/lib/siteContent";
 
 export default async function ServicesPage() {
-  const { services } = await getThreeTsContent();
+  const content = await getThreeTsContent();
+  const { services } = content;
 
   return (
     <main className="flex min-h-screen flex-col bg-cream text-charcoal">
-      <Navbar />
+      <Navbar content={content.global} />
       <section className="w-full px-6 pb-16 pt-32 md:px-16 lg:px-24">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.78fr_0.92fr] lg:items-end">
           <div>
             <div className="mb-8 flex flex-col items-start space-y-4">
               <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-                Services
+                {services.eyebrow}
               </span>
               <div className="h-[2px] w-12 bg-gold/60" />
             </div>
             <h1 className="mb-8 font-serif text-5xl leading-tight text-charcoal md:text-6xl lg:text-7xl">
-              Tailored consulting services to build stronger teams and organizations
+              {services.heading}
             </h1>
             <p className="max-w-2xl text-lg leading-relaxed text-charcoal/70 md:text-xl">
-              Explore coaching, facilitation and consulting services designed to meet your organizational needs, build resilience, and improve how you make an impact in the world.
+              {services.introduction}
             </p>
           </div>
 
@@ -82,7 +83,7 @@ export default async function ServicesPage() {
           ))}
         </div>
       </section>
-      <Footer />
+      <Footer content={content.global} />
     </main>
   );
 }

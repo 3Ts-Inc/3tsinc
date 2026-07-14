@@ -4,15 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-
-const links = [
-  { href: "/about", label: "About" },
-  { href: "/approach", label: "Approach" },
-  { href: "/services", label: "Services" },
-  { href: "/perspectives", label: "Perspectives" },
-  { href: "/testimonials", label: "Testimonials" },
-  { href: "/contact", label: "Contact" },
-];
+import type { ThreeTsContent } from "@/lib/siteContent";
 
 const menuVariants = {
   closed: {
@@ -53,7 +45,7 @@ const linkVariants = {
   open: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } },
 };
 
-export default function Navbar({ transparentOnTop = false }: { transparentOnTop?: boolean }) {
+export default function Navbar({ content, transparentOnTop = false }: { content: ThreeTsContent["global"]; transparentOnTop?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
   const overlayDark = transparentOnTop && !hasScrolled && !isOpen;
@@ -135,10 +127,10 @@ export default function Navbar({ transparentOnTop = false }: { transparentOnTop?
               />
               <div className="hidden flex-col sm:flex">
                 <span className={`whitespace-nowrap font-serif text-xl tracking-tight transition-colors duration-500 md:text-2xl ${overlayDark ? "text-cream" : "text-charcoal"}`}>
-                  Shareef 3Ts Consulting
+                  {content.legalName}
                 </span>
                 <span className="mt-1 whitespace-nowrap font-sans text-[10px] uppercase tracking-widest text-gold md:text-xs">
-                  Thoroughly Thought Through.
+                  {content.tagline}
                 </span>
               </div>
             </Link>
@@ -149,7 +141,7 @@ export default function Navbar({ transparentOnTop = false }: { transparentOnTop?
           <nav
             className="hidden items-center space-x-7 text-sm font-medium uppercase tracking-widest xl:flex 2xl:space-x-8"
           >
-            {links.slice(0, 5).map((link) => (
+            {content.navigation.slice(0, -1).map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -171,7 +163,7 @@ export default function Navbar({ transparentOnTop = false }: { transparentOnTop?
                 overlayDark ? "text-cream/82" : "text-charcoal/80"
               }`}
             >
-              Contact
+              {content.navigation.at(-1)?.label}
             </Link>
           </div>
 
@@ -228,7 +220,7 @@ export default function Navbar({ transparentOnTop = false }: { transparentOnTop?
               exit="closed"
               className="flex flex-col items-start space-y-8"
             >
-              {links.map((link) => (
+              {content.navigation.map((link) => (
                 <motion.div key={link.href} variants={linkVariants}>
                   <Link
                     href={link.href}
@@ -250,10 +242,10 @@ export default function Navbar({ transparentOnTop = false }: { transparentOnTop?
               className="absolute bottom-12 left-8 border-t border-charcoal/10 pt-8 w-[calc(100%-4rem)]"
             >
               <a
-                href="mailto:shareef@3ts-inc.com"
+                href={`mailto:${content.email}`}
                 className="text-gold text-sm tracking-[0.2em] uppercase font-medium"
               >
-                shareef@3ts-inc.com
+                {content.email}
               </a>
             </motion.div>
           </motion.div>

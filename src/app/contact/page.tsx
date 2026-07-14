@@ -4,22 +4,23 @@ import Image from "next/image";
 import { getThreeTsContent } from "@/lib/siteContent";
 
 export default async function ContactPage() {
-  const { contact } = await getThreeTsContent();
+  const content = await getThreeTsContent();
+  const { contact } = content;
 
   return (
     <main className="flex min-h-screen flex-col bg-cream text-charcoal">
-      <Navbar />
+      <Navbar content={content.global} />
       <section className="flex min-h-[72vh] w-full items-center px-6 py-28 md:px-16 lg:px-24 lg:py-32">
         <div className="mx-auto grid w-full max-w-7xl gap-12 lg:grid-cols-[0.78fr_1fr] lg:items-center">
           <div className="flex flex-col items-start text-left">
             <div className="mb-8 flex flex-col items-start space-y-4">
               <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">
-                Contact
+                {contact.eyebrow}
               </span>
               <div className="w-12 h-[2px] bg-gold/60"></div>
             </div>
             <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl leading-tight tracking-tight text-charcoal mb-8">
-              Let&apos;s Chat
+              {contact.heading}
             </h1>
             <p className="mb-12 max-w-lg text-lg leading-relaxed text-charcoal/70 md:text-xl">
               {contact.introduction}
@@ -27,7 +28,7 @@ export default async function ContactPage() {
 
             <div className="mb-12 space-y-8">
               <div className="flex flex-col items-start">
-              <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase mb-2">Email</span>
+              <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase mb-2">{contact.emailLabel}</span>
               <a
                 href={`mailto:${contact.email}`}
                 className="font-serif text-2xl text-charcoal hover:text-gold transition-colors"
@@ -36,7 +37,7 @@ export default async function ContactPage() {
               </a>
               </div>
               <div className="flex flex-col items-start">
-              <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase mb-2">Office Locations</span>
+              <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase mb-2">{contact.locationsLabel}</span>
               <p className="text-charcoal/70 text-lg">{contact.locations}</p>
               </div>
             </div>
@@ -46,15 +47,15 @@ export default async function ContactPage() {
               href={`mailto:${contact.email}`}
               className="bg-[#2A372C] text-white px-8 py-4 text-sm tracking-widest uppercase font-medium hover:bg-[#1E2520] transition-all transform hover:-translate-y-1 active:translate-y-0 shadow-lg"
             >
-              Email {contact.email}
+              {contact.emailCtaLabel}
             </a>
             <a
-              href="https://calendly.com/shareef3ts/a-30min-slot-with-shareef"
+              href={contact.bookingCta.href}
               target="_blank"
               rel="noopener noreferrer"
               className="text-gold text-sm tracking-widest uppercase font-medium border border-gold/30 px-6 py-4 hover:bg-gold/10 transition-all"
             >
-              Book Now
+              {contact.bookingCta.label}
             </a>
             </div>
           </div>
@@ -71,12 +72,12 @@ export default async function ContactPage() {
             />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(21,26,22,0.02),rgba(21,26,22,0.25))]" />
             <div className="absolute inset-x-0 bottom-0 border-t border-white/10 bg-charcoal/70 px-6 py-4 text-xs font-medium uppercase tracking-[0.18em] text-cream/65 backdrop-blur-sm">
-              In the room · Amman
+              {contact.imageCaption}
             </div>
           </div>
         </div>
       </section>
-      <Footer />
+      <Footer content={content.global} />
     </main>
   );
 }
