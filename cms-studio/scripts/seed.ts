@@ -124,4 +124,7 @@ async function seed() {
   console.log("Seeded the 3Ts and Mawzun CMS documents and uploaded their images.");
 }
 
-await seed();
+seed().catch((error: unknown) => {
+  console.error("CMS seed failed.", error);
+  process.exitCode = 1;
+});
