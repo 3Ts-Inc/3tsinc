@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Outfit, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
+export const revalidate = 60;
+
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
