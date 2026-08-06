@@ -3,6 +3,7 @@ import { getCliClient } from "sanity/cli";
 const client = getCliClient({ apiVersion: "2026-07-14" }).withConfig({
   dataset: "three-ts",
 });
+const rawClient = client.withConfig({ perspective: "raw" });
 
 const videos = [
   {
@@ -24,19 +25,28 @@ const videos = [
 ];
 
 async function populateVideos() {
-  await client
-    .patch("threeTsSite")
-    .set({ "perspectives.videos": videos })
-    .unset([
-      "perspectives.cards",
-      "perspectives.featuredEyebrow",
-      "perspectives.featuredTitle",
-      "perspectives.videoEmbedUrl",
-      "perspectives.videoLink",
-      "perspectives.videoTitle",
-    ])
-    .commit();
-  console.log("Added the two Perspectives videos and removed the legacy fields.");
+  const draft = await rawClient.fetch<{ _id: string } | null>(
+    `*[_id == "drafts.threeTsSite"][0]{_id}`,
+  );
+  const documentIds = ["threeTsSite", ...(draft ? [draft._id] : [])];
+
+  await Promise.all(
+    documentIds.map((documentId) =>
+      rawClient
+        .patch(documentId)
+        .set({ "perspectives.videos": videos })
+        .unset([
+          "perspectives.cards",
+          "perspectives.featuredEyebrow",
+          "perspectives.featuredTitle",
+          "perspectives.videoEmbedUrl",
+          "perspectives.videoLink",
+          "perspectives.videoTitle",
+        ])
+        .commit(),
+    ),
+  );
+  console.log("Added the two Perspectives videos and removed the legacy fields from every version.");
 }
 
 populateVideos().catch((error: unknown) => {
