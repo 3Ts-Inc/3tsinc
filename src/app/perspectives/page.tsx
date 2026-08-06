@@ -32,8 +32,8 @@ export default async function PerspectivesPage() {
           {featuredVideo ? <FeaturedVideo video={featuredVideo} /> : null}
           {otherVideos.length > 0 ? (
             <div className="grid grid-cols-1 gap-10">
-              {otherVideos.map((video, index) => (
-                <VideoArticle key={`${video.title}-${video.youtubeUrl}`} video={video} position={index + 2} />
+              {otherVideos.map((video) => (
+                <VideoArticle key={`${video.title}-${video.youtubeUrl}`} video={video} />
               ))}
             </div>
           ) : null}
@@ -84,29 +84,33 @@ function WatchOnYouTube({ video }: { video: PerspectiveVideo }) {
 function FeaturedVideo({ video }: { video: PerspectiveVideo }) {
   return (
     <article className="bg-[#151a16] text-cream p-6 md:p-10 border border-charcoal/10">
-      <div className="flex flex-col items-start space-y-4 mb-8">
-        <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">Featured video</span>
-        <div className="w-12 h-[2px] bg-gold/60"></div>
-      </div>
-      <VideoEmbed video={video} />
-      <div className="max-w-4xl">
-        <h2 className="font-serif text-3xl md:text-4xl mt-8 mb-5">{video.title}</h2>
-        <p className="text-cream/75 leading-relaxed whitespace-pre-line mb-8">{video.description}</p>
-        <WatchOnYouTube video={video} />
+      <div className="max-w-4xl mx-auto">
+        <div className="flex flex-col items-start space-y-4 mb-8">
+          <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">Featured video</span>
+          <div className="w-12 h-[2px] bg-gold/60"></div>
+        </div>
+        <VideoEmbed video={video} />
+        <div className="mt-8">
+          <h2 className="font-serif text-3xl md:text-4xl mb-5">{video.title}</h2>
+          <p className="max-w-[72ch] text-cream/75 leading-relaxed whitespace-pre-line mb-8">{video.description}</p>
+          <WatchOnYouTube video={video} />
+        </div>
       </div>
     </article>
   );
 }
 
-function VideoArticle({ video, position }: { video: PerspectiveVideo; position: number }) {
+function VideoArticle({ video }: { video: PerspectiveVideo }) {
   return (
-    <article className="border border-charcoal/10 bg-[#fcfbf9] p-6 md:p-10 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-8 lg:gap-12 items-start">
-      <VideoEmbed video={video} />
-      <div>
-        <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">Video {String(position).padStart(2, "0")}</span>
-        <h2 className="font-serif text-3xl md:text-4xl text-charcoal mt-4 mb-5">{video.title}</h2>
-        <p className="text-charcoal/65 leading-relaxed whitespace-pre-line mb-8">{video.description}</p>
-        <WatchOnYouTube video={video} />
+    <article className="border border-charcoal/10 bg-[#fcfbf9] p-6 md:p-10">
+      <div className="max-w-4xl mx-auto">
+        <VideoEmbed video={video} />
+        <div className="mt-8">
+          <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">Video</span>
+          <h2 className="font-serif text-3xl md:text-4xl text-charcoal mt-4 mb-5">{video.title}</h2>
+          <p className="max-w-[72ch] text-charcoal/65 leading-relaxed whitespace-pre-line mb-8">{video.description}</p>
+          <WatchOnYouTube video={video} />
+        </div>
       </div>
     </article>
   );
