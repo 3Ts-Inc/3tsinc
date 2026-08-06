@@ -83,8 +83,8 @@ function WatchOnYouTube({ video }: { video: PerspectiveVideo }) {
 
 function FeaturedVideo({ video }: { video: PerspectiveVideo }) {
   return (
-    <article className="bg-[#151a16] text-cream p-6 md:p-10 border border-charcoal/10">
-      <div className="max-w-4xl mx-auto">
+    <article className="bg-[#151a16] text-cream py-10 px-6 md:px-8 border border-charcoal/10">
+      <div className="max-w-5xl mx-auto">
         <div className="flex flex-col items-start space-y-4 mb-8">
           <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">Featured video</span>
           <div className="w-12 h-[2px] bg-gold/60"></div>
@@ -102,8 +102,8 @@ function FeaturedVideo({ video }: { video: PerspectiveVideo }) {
 
 function VideoArticle({ video }: { video: PerspectiveVideo }) {
   return (
-    <article className="border border-charcoal/10 bg-[#fcfbf9] p-6 md:p-10">
-      <div className="max-w-4xl mx-auto">
+    <article className="border border-charcoal/10 bg-[#fcfbf9] py-10 px-6 md:px-8">
+      <div className="max-w-5xl mx-auto">
         <VideoEmbed video={video} />
         <div className="mt-8">
           <span className="text-gold text-xs font-semibold tracking-[0.2em] uppercase">Video</span>
