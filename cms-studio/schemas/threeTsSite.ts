@@ -7,6 +7,19 @@ const strings = (name: string, title: string) => defineField({ name, title, type
 const link = (name: string, title: string) => defineField({ name, title, type: "object", fields: [string("label", "Label"), string("href", "URL or path")] });
 const testimonialArray = (name: string, title: string) => defineField({ name, title, type: "array", of: [defineArrayMember({ name: "testimonial", title: "Testimonial", type: "object", fields: [text("quote", "Quotation", 8), string("author", "Author"), string("title", "Author title")], preview: { select: { title: "author", subtitle: "title" } } })] });
 
+function isYouTubeUrl(value: unknown) {
+  if (typeof value !== "string") return "Enter a YouTube share link.";
+
+  try {
+    const hostname = new URL(value).hostname.replace(/^www\./, "").toLowerCase();
+    return hostname === "youtu.be" || hostname === "youtube.com" || hostname.endsWith(".youtube.com")
+      ? true
+      : "Use a YouTube link, such as https://youtu.be/VIDEO_ID.";
+  } catch {
+    return "Enter a valid YouTube link.";
+  }
+}
+
 export const threeTsSite = defineType({
   name: "threeTsSite",
   title: "3Ts site content",
@@ -52,8 +65,25 @@ export const threeTsSite = defineType({
       defineField({ name: "items", title: "Services", type: "array", of: [defineArrayMember({ name: "servicePageItem", title: "Service", type: "object", fields: [string("title", "Title"), text("subtitle", "Subtitle", 2), paragraphArray, string("cta", "Link label"), string("link", "Link path")], preview: { select: { title: "title", subtitle: "subtitle" } } })] }),
     ] }),
     defineField({ name: "perspectives", title: "Perspectives page", type: "object", group: "perspectives", fields: [
-      string("eyebrow", "Eyebrow"), text("heading", "Heading"), text("introduction", "Introduction"), string("featuredEyebrow", "Featured eyebrow"), string("featuredTitle", "Featured title"), string("videoEmbedUrl", "Video embed URL"), string("videoTitle", "Accessible video title"), link("videoLink", "Video action"),
-      defineField({ name: "cards", title: "Content cards", type: "array", of: [defineArrayMember({ name: "perspectiveCard", title: "Card", type: "object", fields: [string("label", "Label"), string("title", "Title"), text("text", "Description")], preview: { select: { title: "title", subtitle: "label" } } })] }),
+      string("eyebrow", "Eyebrow"), text("heading", "Heading"), text("introduction", "Introduction"),
+      defineField({
+        name: "videos",
+        title: "Videos",
+        description: "Add, reorder, edit, or remove videos here. The first video is featured on the page. Paste a normal YouTube share link; no embed link is needed.",
+        type: "array",
+        of: [defineArrayMember({
+          name: "perspectiveVideo",
+          title: "Video",
+          type: "object",
+          fields: [
+            defineField({ name: "title", title: "Title", type: "string", validation: (rule) => rule.required() }),
+            defineField({ name: "youtubeUrl", title: "YouTube share link", description: "For example: https://youtu.be/VIDEO_ID", type: "url", validation: (rule) => rule.required().custom(isYouTubeUrl) }),
+            defineField({ name: "description", title: "Description", description: "This appears below the video. Line breaks and lists are preserved.", type: "text", rows: 10, validation: (rule) => rule.required() }),
+          ],
+          preview: { select: { title: "title", subtitle: "youtubeUrl" } },
+        })],
+        validation: (rule) => rule.min(1),
+      }),
     ] }),
     defineField({ name: "testimonials", title: "Testimonials page", type: "object", group: "testimonials", fields: [
       string("eyebrow", "Eyebrow"), string("heading", "Heading"), text("introduction", "Introduction"), imageField("backgroundImage", "Background image"),
