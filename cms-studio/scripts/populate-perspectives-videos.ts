@@ -1,6 +1,6 @@
 import { getCliClient } from "sanity/cli";
 
-const client = getCliClient({ apiVersion: "2026-08-07" }).withConfig({
+const client = getCliClient({ apiVersion: "2026-07-14" }).withConfig({
   dataset: "three-ts",
 });
 
@@ -24,8 +24,19 @@ const videos = [
 ];
 
 async function populateVideos() {
-  await client.patch("threeTsSite").set({ "perspectives.videos": videos }).commit();
-  console.log("Added the two Perspectives videos to Sanity.");
+  await client
+    .patch("threeTsSite")
+    .set({ "perspectives.videos": videos })
+    .unset([
+      "perspectives.cards",
+      "perspectives.featuredEyebrow",
+      "perspectives.featuredTitle",
+      "perspectives.videoEmbedUrl",
+      "perspectives.videoLink",
+      "perspectives.videoTitle",
+    ])
+    .commit();
+  console.log("Added the two Perspectives videos and removed the legacy fields.");
 }
 
 populateVideos().catch((error: unknown) => {
